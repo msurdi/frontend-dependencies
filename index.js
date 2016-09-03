@@ -2,7 +2,6 @@
 "use strict";
 var shell = require("shelljs");
 var path = require("path");
-var globToRegExp = require("glob-to-regexp");
 
 module.exports = frontendDependencies;
 
