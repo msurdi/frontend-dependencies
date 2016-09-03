@@ -10,7 +10,7 @@ after running `npm install` in your project.
 Installation
 ------------
 
-`npm install --save-dev frontend-dependencies`
+`npm install --save frontend-dependencies`
 
 Configuration
 -------------
