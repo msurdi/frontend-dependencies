@@ -2,6 +2,7 @@
 "use strict";
 var shell = require("shelljs");
 var path = require("path");
+var globToRegExp = require("glob-to-regexp");
 
 module.exports = frontendDependencies;
 
@@ -32,16 +33,18 @@ function frontendDependencies(workDir) {
 
     var packages = packageJson.frontendDependencies.packages || [];
     for (var i = 0; i < packages.length; i++) {
-        var packageName = packages[i];
-        var sourcePath = path.join(workDir, "node_modules", packageName);
-        var targetPath = path.join(workDir, packageJson.frontendDependencies.target);
+        var packageName = packages[i].split("/").slice(0, 1)[0];
+        var desiredFilesGlob = packages[i].split("/").slice(1).join("/") || "/*";
+        var modulePath = path.join(workDir, "node_modules", packageName);
+        var desiredFilesPath = path.join(modulePath, desiredFilesGlob);
+        var targetPath = path.join(workDir, packageJson.frontendDependencies.target, packageName);
 
-        if (!shell.test("-d", sourcePath)) {
-            fail("Module not found or not a directory: " + sourcePath);
+        if (!shell.test("-d", modulePath)) {
+            fail("Module not found or not a directory: " + modulePath);
         }
 
         shell.mkdir("-p", targetPath);
-        shell.cp("-r", sourcePath, targetPath);
+        shell.cp("-r", desiredFilesPath, targetPath);
     }
 
 

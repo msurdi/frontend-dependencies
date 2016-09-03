@@ -14,8 +14,9 @@
   "frontendDependencies": {
     "target": "static/build",
     "packages": [
-      "jquery",
-      "normalize.css"
+      "jquery/dist/*",
+      "normalize.css",
+      "turbolinks/"
     ]
   }
 }
