@@ -1,6 +1,6 @@
 {
   "name": "frontend-dependencies",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Copies node packages to a directory where your frontend tools will be able to find them",
   "main": "index.js",
   "scripts": {
