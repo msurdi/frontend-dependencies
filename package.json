@@ -18,8 +18,13 @@
     "vendor",
     "static"
   ],
-  "files": ["index.js"],
-  "author": "Matias Surdi <matias@surd.net>",
+  "files": [
+    "index.js"
+  ],
+  "author": {
+    "name": "Matias Surdi",
+    "email": "matias@surdi.net"
+  },
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/msurdi/frontend-dependencies/issues"
