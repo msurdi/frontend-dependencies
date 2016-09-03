@@ -6,17 +6,17 @@
   "author": "Matias Surdi <matias@surdi.net>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "jquery": "^3.1.0",
-    "normalize.css": "^4.2.0",
-    "turbolinks": "^5.0.0",
-    "shelljs": "^0.7.4"
+    "jquery": "3.1.0",
+    "normalize.css": "4.2.0",
+    "turbolinks": "5.0.0",
+    "shelljs": "0.7.4"
   },
   "frontendDependencies": {
     "target": "static/build",
     "packages": [
       "jquery/dist/*",
       "normalize.css",
-      "turbolinks/"
+      "turbolinks/{src,LICENSE}"
     ]
   }
 }
