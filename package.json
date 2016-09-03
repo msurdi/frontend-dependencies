@@ -18,6 +18,7 @@
     "vendor",
     "static"
   ],
+  "files": ["index.js"],
   "author": "Matias Surdi <matias@surd.net>",
   "license": "Apache-2.0",
   "bugs": {
