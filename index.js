@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var shell = require("shelljs");
 var path = require("path");

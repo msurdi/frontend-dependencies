@@ -6,6 +6,9 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha"
   },
+  "bin": {
+    "frontend-dependencies": "./index.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/msurdi/frontend-dependencies.git"
