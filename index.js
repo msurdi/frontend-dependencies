@@ -2,6 +2,7 @@
 "use strict";
 var shell = require("shelljs");
 var path = require("path");
+var fs = require("fs");
 
 module.exports = frontendDependencies;
 
@@ -67,7 +68,18 @@ function frontendDependencies(workDir) {
         }
 
         if (exact) {
-            shell.mkdir("-p", path.dirname(targetPath));
+            var sourceIsFile = false;
+            try {
+                sourceIsFile = fs.lstatSync(desiredFilesPath).isFile()
+            } catch(e) { /* don't care */ }
+
+            if (sourceIsFile) {
+                // if source is a file, create the target parent directory
+                shell.mkdir("-p", path.dirname(targetPath));
+            } else {
+                // if source is a directory, create the full target path
+                shell.mkdir("-p", targetPath)
+            }
             shell.cp("-r", desiredFilesPath, targetPath);
         } else {
             targetPath = path.join(targetPath, packageName);
