@@ -72,7 +72,7 @@ Then you can run `/node_modules/.bin/frontend-dependencies` by hand, or even bet
 by adding to your package.json scripts sections something like:
 
     "scripts": {
-        "postinstall": "./node_modules/.bin/frontend-dependencies"
+        "postinstall": "frontend-dependencies"
     }
 
 You can see a complete example [here](https://github.com/msurdi/frontend-dependencies/blob/master/fixtures/package.json)
