@@ -189,6 +189,11 @@ The copy process creates a subfolder with the actual module name, except you wan
 > npm test
 
 
+## ToDo
+
+* improve testing for copy cases (simple fist code example in readme)
+* improve testing for npm install for packages and urls
+
 ## Experience with managing npm dependencies for the frontend
 
 * bower: possible, but a source of trouble
