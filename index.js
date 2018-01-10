@@ -140,7 +140,7 @@ npm install [<@scope>/]<name>@<version range>
 */
 function npmInstallPkgName(pkgName, version) {
     var command = 'npm i ' + pkgName;
-    if (!version) command += ('@' + version);
+    if (version) command += ('@' + version);
     tryCommand(command)
 }
 
