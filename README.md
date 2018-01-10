@@ -11,11 +11,50 @@ NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to upd
 
 
 TODO
-* testing for multiple files
 * urls not working right now
 * url tests
 
-## Your package.json looks like ...
+## Example
+
+```js
+{
+  "name": "frontend-dependencies-test",
+  "version": "1.0.0",
+   // etc.
+
+  "devDependencies": {
+    "shelljs": "0.7.4"
+  },
+  "frontendDependencies": {
+    "target": "static/build",
+    "packages": {
+      "jquery": {             
+          "version": "3.1.0",
+          "src": "dist/jquery.min.js"
+      },
+      "normalize.css": {
+          "version": "4.2.0",
+          "src": "normalize.css"
+      }
+    }
+  }
+}
+```
+
+Your target folder in your project will look like:
+
+```
+ project
+   |
+   |_ static
+   |   |_ build
+   |        |_ jquery.min.js
+   |        |_ normalize.css
+   |
+
+```
+
+## Full example
 
 ```js
 {
@@ -43,7 +82,7 @@ TODO
           // alternative to 'version`: specifie git url, tarball url, tarball file, folder
           "url": "git@github.com:turbolinks/turbolinks.git",     
           "src": "{src,LICENSE}", // copy multiple files
-          "target": "static/build/turbo",
+          "target": "static/build/turbo", // specific target path
           "exact":true // no extra folder with package Name
       }
     }
@@ -101,15 +140,15 @@ Run can also run it by hand
 ### Packages Options
 
 #### version
-The npm package name will be taken from the name specified in "frontendDependencies.packages"
+The npm package name will be taken from the name specified in "frontendDependencies.packages" and the package installed from npm.
 ```js
-                         // none: install latest version from npm
+                         // none: install latest
     "version": "0.2.4"   // version
     "version": "beta"    // tag
     "version": "0.^2.4"  // version range
 ```
 #### url
-
+Alternative sources for your packages.
 ```js
     "url": "ssh://user@host.xz:port/path/to/repo.git/"
     "url": "git://github.com/ember-cli/ember-cli.git#v0.1.0"
@@ -128,7 +167,7 @@ The source file(s) or folder(s) within each npm package to be copied.
    "src": "dist/*"
 
    // option 3: copy serveral files or folders
-   "src": ["index.js", "index.css"]
+   "src": "{index.js,index.css}"]
 ```
 
 #### target
@@ -139,7 +178,7 @@ The source file(s) or folder(s) within each npm package to be copied.
 ```
 
 #### exact
-
+The copy process creates a subfolder with the actual module name, except you want it exact.
 
 ```js
    "exact": true
