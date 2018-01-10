@@ -53,9 +53,9 @@ function frontendDependencies(workDir) {
       //  eg.: /opt/myProject/node_modules/jquery
 
 
-      var relativeSourcePath = pkg.src
-      //  eg.: dist/*
-      //  eg.: ["dist/*", "test"]
+      var sourceFilesPath = path.join(modulePath, pkg.src || "/*");
+      //  eg.: /opt/myProject/node_modules/jquery/dist/*
+      //  eg.: /opt/myProject/node_modules/jquery/dist/{file1,file2}
 
 
       var targetPath = null;
@@ -79,19 +79,25 @@ function frontendDependencies(workDir) {
 
 
       /*-------------------- copy specified files ----------------------*/
-       // multiple targets to copy?
-      if ((!!relativeSourcePath) && (relativeSourcePath.constructor === Array)) {
-         pkg.src.forEach(function(srcPath) {
 
-            // prepare specific target file path
-            //  eg.: /opt/myProject/build/static => /opt/myProject/build/static/dist/*
-            var targetFilePath = path.join(targetPath, srcPath);
+      if (exact) {
+         var sourceIsFile = false;
+         try {
+            sourceIsFile = fs.lstatSync(sourceFilesPath).isFile()
+         } catch (e) { /* don't care */ }
 
-            copyFile(modulePath, srcPath, targetFilePath, pkgName, exact)
-         })
-      }else { // one target to copy
-         copyFile(modulePath, relativeSourcePath, targetPath, pkgName, exact)
+         if (sourceIsFile) {
+            // if source is a file, create the target parent directory
+            shell.mkdir("-p", path.dirname(targetPath));
+         } else {
+            // if source is a directory, create the full target path
+            shell.mkdir("-p", targetPath)
+         }
+      } else {
+         targetPath = path.join(targetPath, pkgName);
+         shell.mkdir("-p", targetPath);
       }
+      shell.cp("-r", sourceFilesPath, targetPath);
 
 
    }
@@ -136,28 +142,6 @@ function tryCommand(command) {
    } catch (err) {
       fail(err)
    }
-}
-
-function copyFile(modulePath, relativeSourcePath, targetPath, pkgName, exact){
-   var sourceFilesPath = path.join(modulePath, (relativeSourcePath || "/*"));
-   if (exact) {
-      var sourceIsFile = false;
-      try {
-         sourceIsFile = fs.lstatSync(sourceFilesPath).isFile()
-      } catch (e) { /* don't care */ }
-
-      if (sourceIsFile) {
-         // if source is a file, create the target parent directory
-         shell.mkdir("-p", path.dirname(targetPath));
-      } else {
-         // if source is a directory, create the full target path
-         shell.mkdir("-p", targetPath)
-      }
-   } else {
-      targetPath = path.join(targetPath, pkgName);
-      shell.mkdir("-p", targetPath);
-   }
-   shell.cp("-r", sourceFilesPath, targetPath);
 }
 
 function fail(reason) {

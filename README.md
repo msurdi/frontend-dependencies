@@ -10,6 +10,11 @@ Install node modules and copie desired files to each directory.
 NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to update your projects to the new syntax!
 
 
+TODO
+* testing for multiple files
+* urls not working right now
+* url tests
+
 ## Your package.json looks like ...
 
 ```js
@@ -31,16 +36,15 @@ NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to upd
           "version": "3.1.0", // for `npm install`: version, tag or version range
           "src": "dist/*"     // relative path in package to copy files
       },
-      "normalize.css": {
-          "version": "4.2.0",
-          // no src => copy whole package
+      "normalize.css": { // copy whole package
+          "version": "4.2.0"
       },
       "turbolinks": {
           // alternative to 'version`: specifie git url, tarball url, tarball file, folder
           "url": "git@github.com:turbolinks/turbolinks.git",     
-          "src": "{src,LICENSE}",
-          "target":"js/whatever.js",
-          "exact":true
+          "src": "{src,LICENSE}", // copy multiple files
+          "target": "static/build/turbo",
+          "exact":true // no extra folder with package Name
       }
     }
   }
@@ -49,17 +53,30 @@ NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to upd
 
 Your target folder in your project will look like:
 
-```js
-
+```
  project
    |
    |_ static
    |   |_ build
    |        |_ jquery
+   |        |    |_ core.js
+   |        |    |_ jquery.js
+   |        |    |_ jquery.min.js
+   |        |    |_ ...
+   |        |
    |        |_ normalize.css
+   |        |    |_ CHANGELOG.md
+   |        |    |_ LICENSE.md
+   |        |    |_ normalize.css
+   |        |    |_ ...
+   |        |
+   |        |_ turbo
+   |              |_ src
+   |              |   |_ turbolinks
+   |              |
+   |              |_ LICENSE
    |
-   |_ js
-       |_ whatever.js
+   |
 
 ```
 

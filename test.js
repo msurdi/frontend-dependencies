@@ -19,7 +19,7 @@ describe("frontend-dependencies", function () {
         });
 
         after(function () {
-            shell.rm("-rf", ["node_modules", "static/build/*"]);
+            // shell.rm("-rf", ["node_modules", "static/build/*"]);
         });
 
         it("should have copied desired jquery files to static/build/", function () {
@@ -38,9 +38,9 @@ describe("frontend-dependencies", function () {
         });
 
         it("should have copied turbolinks desired files only", function () {
-            assert.ok(shell.test("-d", "static/build/turbolinks/src"));
-            assert.ok(shell.test("-f", "static/build/turbolinks/LICENSE"));
-            assert.ok(!shell.test("-f", "static/build/turbolinks/dist"));
+            assert.ok(shell.test("-d", "static/build/turbo/src"));
+            assert.ok(shell.test("-f", "static/build/turbo/LICENSE"));
+            assert.ok(!shell.test("-f", "static/build/turbo/dist"));
         });
     });
 
