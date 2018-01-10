@@ -22,7 +22,7 @@
           "version": "4.2.0"
       },
       "turbolinks": {
-          "version": "5.0.0",
+          "url": "git://github.com/turbolinks/turbolinks.git",
           "src": "{src,LICENSE}",
           "target": "static/build/turbo",
           "exact": true

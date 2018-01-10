@@ -10,11 +10,9 @@ Install node modules and copie desired files to each directory.
 NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to update your projects to the new syntax!
 
 
-TODO
-* urls not working right now
-* url tests
-
 ## Example
+
+Your package.json:
 
 ```js
 {
@@ -80,7 +78,7 @@ Your target folder in your project will look like:
       },
       "turbolinks": {
           // alternative to 'version`: specifie git url, tarball url, tarball file, folder
-          "url": "git@github.com:turbolinks/turbolinks.git",     
+          "url": "git://github.com/turbolinks/turbolinks.git",     
           "src": "{src,LICENSE}", // copy multiple files
           "target": "static/build/turbo", // specific target path
           "exact":true // no extra folder with package Name
@@ -193,8 +191,8 @@ The copy process creates a subfolder with the actual module name, except you wan
 
 ## Experience with managing npm dependencies for the frontend
 
-* bower was just one more source of trouble
-* npm + grunt/gulp: possible but not two files to manage
+* bower: possible, but a source of trouble
+* npm + grunt/gulp: possible, but you have two files to manage
 * pancake
    * https://github.com/govau/pancake
    * https://medium.com/dailyjs/npm-and-the-front-end-950c79fc22ce
@@ -205,11 +203,11 @@ The copy process creates a subfolder with the actual module name, except you wan
 The goal of this package is to make the management of frontend components easier and lower maintenance.
 
 * Most packages come with a ready to use (compiled and minified, etc.) version of js and css
-* With http2, the sending of small files is encouraged.
-* The browser can cache common libs easy.
+* With http2, the sending of small files is encouraged
+* The browser can cache common libs easy
 
 We think to copy the needed part of a libs to your webserver folder, is simple and gives you most benefit.
 
-Although there is no handling of the dependencies of the frontend components (like a jQuery plugin needs jQuery), this seems not too important and also frontend packages could do this over peerDependencies.
+Although there is no handling of the dependencies of the frontend components (like a jQuery plugin needs jQuery), this seems not too important for small projects and also frontend packages can do this over peerDependencies.
 
 This article is interesting: http://blog.npmjs.org/post/101775448305/npm-and-front-end-packaging

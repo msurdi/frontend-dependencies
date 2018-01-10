@@ -19,7 +19,7 @@ describe("frontend-dependencies", function () {
         });
 
         after(function () {
-            // shell.rm("-rf", ["node_modules", "static/build/*"]);
+            shell.rm("-rf", ["node_modules", "static/build/*"]);
         });
 
         it("should have copied desired jquery files to static/build/", function () {
