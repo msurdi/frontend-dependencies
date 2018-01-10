@@ -3,81 +3,157 @@
 
 # frontend-dependencies
 
-Utility for copying npm installed packages into a different directory.
+Comfortable manage frontendDependencies in the `package.json`:
+Install node modules and copie desired files to each directory.
 
-For example, you might wish to use this for automatically copying `node_modules/jquery` to `static/vendor`
-after running `npm install` in your project.
+
+NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to update your projects to the new syntax!
+
+
+## Your package.json looks like ...
+
+```js
+{
+  "name": "frontend-dependencies-test",
+  "version": "1.0.0",
+  "description": "frontend-dependencies test project",
+  "main": "index.js",
+  "author": "Matias Surdi <matias@surdi.net>",
+  "license": "Apache-2.0",
+  "dependencies": { },
+  "devDependencies": {
+    "shelljs": "0.7.4"
+  },
+  "frontendDependencies": {
+    "target": "static/build",
+    "packages": {
+      "jquery": {             // npm package name
+          "version": "3.1.0", // for `npm install`: version, tag or version range
+          "src": "dist/*"     // relative path in package to copy files
+      },
+      "normalize.css": {
+          "version": "4.2.0",
+          // no src => copy whole package
+      },
+      "turbolinks": {
+          // alternative to 'version`: specifie git url, tarball url, tarball file, folder
+          "url": "git@github.com:turbolinks/turbolinks.git",     
+          "src": "{src,LICENSE}",
+          "target":"js/whatever.js",
+          "exact":true
+      }
+    }
+  }
+}
+```
+
+Your target folder in your project will look like:
+
+```js
+
+ project
+   |
+   |_ static
+   |   |_ build
+   |        |_ jquery
+   |        |_ normalize.css
+   |
+   |_ js
+       |_ whatever.js
+
+```
 
 
 ## Installation
 
-`npm install --save frontend-dependencies`
+> npm install --save frontend-dependencies
 
-
-### Configuration
-
-Add to your `package.json` a section like:
-
-      "frontendDependencies": {
-        "target": "static/build",
-        "packages": [
-          "jquery",
-          "normalize.css",
-          {"src":"jquery/dist"},
-          {"src":"normalize", "target":"vendor"},
-          {"src":"jquery/dist/core.js", "target":"js/whatever.js", "exact":true}
-        ]
-      }
-
-
-
-### Packages Value Types
-
-
-#### String
-
-
-Path to a file or directory that is relative to the node_modules directory.
-
-
-##### Examples
-
-* `["jquery"]`: copies contents of `node_modules/jquery` to `static/build/jquery/`
-* `["normalize.css"]` copies `node_modules/normalize/normalize.css` to `static/build/normalize/normalize.css`
-
-
-#### Object
-
-Object values allow different targets per item. The also allow setting an exact target, bypassing the default behavior that creates a subdirectory based on the source module's name.
-
-* `src` (required): works exactly like the string syntax shown above
-* `target` (optional): define a custom target, works exactly like frontendDependencies.target
-* `exact` (optional): changes the behavior of target to be the exact destination.
-
-
-##### Examples
-
-* `[{"src":"jquery/dist"}]` : copies contents of `node_modules/jquery/dist` to `static/build/jquery/`
-* `[{"src":"normalize", "target":"vendor"}]`: copies contents of `node_modules/normalize` to `vendor/normalize/`
-* `[{"src":"jquery/dist/core.js", "target":"js/whatever.js", "exact":true]`: copies `node_modules/dist/core.js` to `js/whatever.js`
-* `[{"src":"jquery/dist/", "target":"myjquery", "exact":true]`: copies contents of `node_modules/dist/` to `myjquery/`
-
-
-## Execution
-
-The packages listed in `frontendDependencies.packages` should have been already installed with 
-`npm install --save <packagename>` or similar, that means they should exist.
-
-Then you can run `/node_modules/.bin/frontend-dependencies` by hand, or even better, make it a postinstall script
-by adding to your package.json scripts sections something like:
-
+Make it a postinstall script by adding this to your package.json:
+```json
     "scripts": {
         "postinstall": "frontend-dependencies"
     }
+```
 
 You can see a complete example [here](https://github.com/msurdi/frontend-dependencies/blob/master/fixtures/package.json)
+
+Run can also run it by hand
+
+> /node_modules/.bin/frontend-dependencies
+
+### Packages Options
+
+#### version
+The npm package name will be taken from the name specified in "frontendDependencies.packages"
+```js
+                         // none: install latest version from npm
+    "version": "0.2.4"   // version
+    "version": "beta"    // tag
+    "version": "0.^2.4"  // version range
+```
+#### url
+
+```js
+    "url": "ssh://user@host.xz:port/path/to/repo.git/"
+    "url": "git://github.com/ember-cli/ember-cli.git#v0.1.0"
+    "url": "forever.tar.gz"
+    "url": "https://github.com/User/repo/archive/master.tar.gz"
+    "url": "/testfolder"
+```
+
+#### src
+The source file(s) or folder(s) within each npm package to be copied.
+
+```js
+   // option 1: do not specify to copy the whole folder
+
+   // option 2: copy one file or folder
+   "src": "dist/*"
+
+   // option 3: copy serveral files or folders
+   "src": ["index.js", "index.css"]
+```
+
+#### target
+The source file(s) or folder(s) within each npm package to be copied.
+
+```js
+   "target": "dest"
+```
+
+#### exact
+
+
+```js
+   "exact": true
+```
+
 
 
 ## Tests
 
-`npm test`
+> npm test
+
+
+## Experience with managing npm dependencies for the frontend
+
+* bower was just one more source of trouble
+* npm + grunt/gulp: possible but not two files to manage
+* pancake
+   * https://github.com/govau/pancake
+   * https://medium.com/dailyjs/npm-and-the-front-end-950c79fc22ce
+   * might be good to manage complexe dependencies in very large projects
+   * when you try not keep the ammount of dependencies at a reasonable level, this might be overkill
+
+## Ideas
+The goal of this package is to make the management of frontend components easier and lower maintenance.
+
+* Most packages come with a ready to use (compiled and minified, etc.) version of js and css
+* With http2, the sending of small files is encouraged.
+* The browser can cache common libs easy.
+
+We think to copy the needed part of a libs to your webserver folder, is simple and gives you most benefit.
+
+Although there is no handling of the dependencies of the frontend components (like a jQuery plugin needs jQuery), this seems not too important and also frontend packages could do this over peerDependencies.
+
+This article is interesting: http://blog.npmjs.org/post/101775448305/npm-and-front-end-packaging

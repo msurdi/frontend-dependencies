@@ -8,12 +8,12 @@ shell.config.fatal = true;
 
 describe("frontend-dependencies", function () {
     describe("when there are node modules", function () {
-        this.timeout(10000);
+        this.timeout(15000);
         before(function (done) {
             shell.cd("fixtures");
-            if (shell.exec("npm install").code !== 0) {
-                done("Error running npm install");
-            }
+            // if (shell.exec("npm install").code !== 0) {
+            //     done("Error running npm install");
+            // }
             frontendDependencies();
             done();
         });

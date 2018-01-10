@@ -6,17 +6,29 @@
   "author": "Matias Surdi <matias@surdi.net>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "jquery": "3.1.0",
-    "normalize.css": "4.2.0",
-    "turbolinks": "5.0.0",
-    "shelljs": "0.7.4"
+    "shelljs": "0.7.4",
+    "jquery":"3.1.0",
+    "normalize.css":"4.2.0",
+    "turbolinks":"5.0.0"
   },
   "frontendDependencies": {
     "target": "static/build",
-    "packages": [
-      "jquery/dist/*",
-      "normalize.css",
-      "turbolinks/{src,LICENSE}"
-    ]
+    "packages": {
+      "jquery": {
+          "version": "3.1.0",
+          "src": "dist/*"
+      },
+      "jquery-ui":{
+          "version": "1.12.1",
+          "src": ["ui/*", "build/*"]
+      },
+      "normalize.css": {
+          "version": "4.2.0"
+      },
+      "turbolinks": {
+          "version": "5.0.0",
+          "src": "{src,LICENSE}"
+      }
+    }
   }
 }
