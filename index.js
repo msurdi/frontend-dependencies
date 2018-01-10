@@ -26,6 +26,14 @@ function frontendDependencies(workDir) {
     if (!packageJson.frontendDependencies.packages) {
         fail("No 'frontendDependencies.packages' in package.json");
     }
+
+
+    // maybe remove this code in later versions
+    if (packageJson.frontendDependencies.packages.constructor === Array) {
+        fail("You have an old version of this package: Update to version 0.5.0 and change the syntax in your package.json");
+    }
+
+
     var packages = packageJson.frontendDependencies.packages || [];
 
 
