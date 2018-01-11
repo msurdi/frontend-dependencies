@@ -132,15 +132,16 @@ function getAndValidateTargetPath(pkg, packageJson, workDir, pkgName){
 
 function copyFiles (sourceFilesPath, targetPath, pkgName, exact){
    if (exact) {
-       var sourceIsFile = false;
-       try {
-           sourceIsFile = fs.lstatSync(sourceFilesPath).isFile()
-       } catch (e) { /* don't care */ }
 
-       // if source is a file, create the target parent directory
-       if (sourceIsFile) targetPath = path.dirname(targetPath)
+      // I do not understand the purpose, can you explain?
 
-       // else: source is a directory, create the full target path
+      //  var sourceIsFile = false;
+      //  try {
+      //      sourceIsFile = fs.lstatSync(sourceFilesPath).isFile()
+      //  } catch (e) { /* don't care */ }
+      // if source is a file, create the target parent directory
+      // if (sourceIsFile) targetPath = path.dirname(targetPath)
+      // else: source is a directory, create the full target path
 
    } else {
        targetPath = path.join(targetPath, pkgName);

@@ -26,13 +26,15 @@ Your package.json:
   "frontendDependencies": {
     "target": "static/build",
     "packages": {
-      "jquery": {             
+      "jquery": {
           "version": "3.1.0",
-          "src": "dist/jquery.min.js"
+          "src": "dist/jquery.min.js",
+          "exact": true
       },
       "normalize.css": {
           "version": "4.2.0",
-          "src": "normalize.css"
+          "src": "normalize.css",
+          "exact": true
       }
     }
   }
@@ -191,7 +193,6 @@ The copy process creates a subfolder with the actual module name, except you wan
 
 ## ToDo
 
-* improve testing for copy cases (simple fist code example in readme)
 * improve testing for npm install for packages and urls
 
 ## Experience with managing npm dependencies for the frontend

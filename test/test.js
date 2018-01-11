@@ -15,31 +15,18 @@ describe("frontend-dependencies testCase 1", function () {
             frontendDependencies();
             done();
         });
+        it("should have copied jquery.min.js to static/build/", function () {
+            assert.ok(shell.test("-f", "static/build/jquery.min.js"));
+            assert.ok(!shell.test("-f", "static/build/jquery.js"));
+        });
 
+        it("should have copied normalize.css to static/build/", function () {
+            assert.ok(shell.test("-f", "static/build/normalize.css"));
+            assert.ok(!shell.test("-f", "static/build/package.json"));
+        });
         after(function () {
             shell.rm("-rf", ["node_modules", "static/build/*"]);
             shell.cd("..");
-        });
-
-        it("should have copied desired jquery files to static/build/", function () {
-            assert.ok(shell.test("-d", "static/build/jquery"));
-            assert.ok(shell.test("-f", "static/build/jquery/jquery.js"));
-            assert.ok(shell.test("-f", "static/build/jquery/jquery.slim.js"));
-            assert.ok(shell.test("-f", "static/build/jquery/jquery.slim.min.map"));
-        });
-
-        it("shoult not have copied undesired jquery files to static/build", function () {
-            assert.ok(!shell.test("-d", "static/build/jquery/src"));
-        });
-
-        it("should not have copied shelljs", function () {
-            assert.ok(!shell.test("-d", "static/build/shelljs"));
-        });
-
-        it("should have copied turbolinks desired files only", function () {
-            assert.ok(shell.test("-d", "static/build/turbo/src"));
-            assert.ok(shell.test("-f", "static/build/turbo/LICENSE"));
-            assert.ok(!shell.test("-f", "static/build/turbo/dist"));
         });
     });
 });
@@ -53,12 +40,6 @@ describe("frontend-dependencies testCase 2", function () {
             frontendDependencies();
             done();
         });
-
-        after(function () {
-            shell.rm("-rf", ["node_modules", "static/build/*"]);
-            shell.cd("..");
-        });
-
         it("should have copied desired jquery files to static/build/", function () {
             assert.ok(shell.test("-d", "static/build/jquery"));
             assert.ok(shell.test("-f", "static/build/jquery/jquery.js"));
@@ -78,6 +59,10 @@ describe("frontend-dependencies testCase 2", function () {
             assert.ok(shell.test("-d", "static/build/turbo/src"));
             assert.ok(shell.test("-f", "static/build/turbo/LICENSE"));
             assert.ok(!shell.test("-f", "static/build/turbo/dist"));
+        });
+        after(function () {
+            shell.rm("-rf", ["node_modules", "static/build/*"]);
+            shell.cd("..");
         });
     });
 });

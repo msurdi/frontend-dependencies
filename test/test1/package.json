@@ -16,15 +16,12 @@
     "packages": {
       "jquery": {
           "version": "3.1.0",
-          "src": "dist/*"
+          "src": "dist/jquery.min.js",
+          "exact": true
       },
       "normalize.css": {
-          "version": "4.2.0"
-      },
-      "turbolinks": {
-          "url": "git://github.com/turbolinks/turbolinks.git",
-          "src": "{src,LICENSE}",
-          "target": "static/build/turbo",
+          "version": "4.2.0",
+          "src": "normalize.css",
           "exact": true
       }
     }
