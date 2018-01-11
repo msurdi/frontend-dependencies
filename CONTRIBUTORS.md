@@ -10,6 +10,6 @@
   * developer
 
 
-* **[Felix Furtmayr](https://github.com/azatoth)**
+* **[Felix Furtmayr](https://github.com/FelixFurtmayr)**
   * developer
   * maintainer
