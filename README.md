@@ -3,8 +3,8 @@
 
 # frontend-dependencies
 
-Comfortable manage frontendDependencies in the `package.json`:
-Install node modules and copie desired files to each directory.
+Easily manage your frontend dependencies in `package.json`:
+Install node modules and copy desired files to each directory.
 
 
 NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to update your projects to the new syntax!
@@ -133,7 +133,7 @@ You can see a complete example [here](https://github.com/msurdi/frontend-depende
 
 Run can also run it by hand
 
-> /node_modules/.bin/frontend-dependencies
+> ./node_modules/.bin/frontend-dependencies
 
 ### Packages Options
 
@@ -143,7 +143,7 @@ The npm package name will be taken from the name specified in "frontendDependenc
                          // none: install latest
     "version": "0.2.4"   // version
     "version": "beta"    // tag
-    "version": "0.^2.4"  // version range
+    "version": "^0.2.4"  // version range
 ```
 #### url
 Alternative sources for your packages.

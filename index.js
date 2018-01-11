@@ -30,7 +30,7 @@ function frontendDependencies(workDir) {
 
     // maybe remove this code in later versions
     if (packageJson.frontendDependencies.packages.constructor === Array) {
-        fail("You have an old version of this package: Update to version 0.5.0 and change the syntax in your package.json");
+        fail("Update your package.json frontendDependencies format to > 1.0.0 syntax as explained at https://github.com/msurdi/frontend-dependencies");
     }
 
 
