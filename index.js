@@ -137,10 +137,9 @@ function copyFiles (sourceFilesPath, targetPath, pkgName, exact){
            sourceIsFile = fs.lstatSync(sourceFilesPath).isFile()
        } catch (e) { /* don't care */ }
 
-       if (sourceIsFile) {
-           // if source is a file, create the target parent directory
-           targetPath = path.dirname(targetPath)
-       }
+       // if source is a file, create the target parent directory
+       if (sourceIsFile) targetPath = path.dirname(targetPath)
+
        // else: source is a directory, create the full target path
 
    } else {
