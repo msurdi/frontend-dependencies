@@ -4,7 +4,7 @@
   "description": "Copies node packages to a directory where your frontend tools will be able to find them",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "./node_modules/.bin/mocha ./test/test.js"
   },
   "bin": {
     "frontend-dependencies": "./index.js"
