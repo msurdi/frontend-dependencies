@@ -7,7 +7,7 @@ Easily manage your frontend dependencies in `package.json`:
 Install node modules and copy desired files to each directory.
 
 
-NOTE: There is a breaking change from Version `0.4.0` to `0.5.0`. Be sure to update your projects to the new syntax!
+NOTE: There is a breaking change from Version `0.4.0` to `1.0.0`. Be sure to update your projects to the new syntax!
 
 
 ## Example
