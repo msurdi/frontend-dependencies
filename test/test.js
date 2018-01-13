@@ -12,6 +12,7 @@ describe("frontend-dependencies testCase 1", function () {
         this.timeout(15000);
         before(function (done) {
             shell.cd("test1");
+            shell.rm("-rf", ["node_modules", "static/build/*"]); // cleanup
             frontendDependencies();
             done();
         });
@@ -25,7 +26,6 @@ describe("frontend-dependencies testCase 1", function () {
             assert.ok(!shell.test("-f", "static/build/package.json"));
         });
         after(function () {
-            shell.rm("-rf", ["node_modules", "static/build/*"]);
             shell.cd("..");
         });
     });
@@ -37,6 +37,7 @@ describe("frontend-dependencies testCase 2", function () {
         this.timeout(15000);
         before(function (done) {
             shell.cd("test2");
+            shell.rm("-rf", ["node_modules", "static/build/*"]); // cleanup
             frontendDependencies();
             done();
         });
@@ -66,7 +67,6 @@ describe("frontend-dependencies testCase 2", function () {
             assert.ok(!shell.test("-f", "static/build/turbo/dist"));
         });
         after(function () {
-            //shell.rm("-rf", ["node_modules", "static/build/*"]);
             shell.cd("..");
         });
     });
