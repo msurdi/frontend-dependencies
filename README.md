@@ -28,13 +28,11 @@ Your package.json:
     "packages": {
       "jquery": {
           "version": "3.1.0",
-          "src": "dist/jquery.min.js",
-          "exact": true
+          "src": "dist/jquery.min.js"
       },
       "normalize.css": {
           "version": "4.2.0",
-          "src": "normalize.css",
-          "exact": true
+          "src": "normalize.css"
       }
     }
   }
@@ -74,6 +72,7 @@ Your target folder in your project will look like:
       "jquery": {             // npm package name
           "version": "3.1.0", // for `npm install`: version, tag or version range
           "src": "dist/*"     // relative path in package to copy files
+          "namespaced": true  // extra parent folder with package Name
       },
       "normalize.css": { // copy whole package
           "version": "4.2.0"
@@ -82,8 +81,7 @@ Your target folder in your project will look like:
           // alternative to 'version`: specifie git url, tarball url, tarball file, folder
           "url": "git://github.com/turbolinks/turbolinks.git",     
           "src": "{src,LICENSE}", // copy multiple files
-          "target": "static/build/turbo", // specific target path
-          "exact":true // no extra folder with package Name
+          "target": "static/build/turbo" // specific target path
       }
     }
   }
@@ -177,14 +175,25 @@ The source file(s) or folder(s) within each npm package to be copied.
    "target": "dest"
 ```
 
-#### exact
-The copy process creates a subfolder with the actual module name, except you want it exact.
+#### namespaced
+Often you will copy just a single file from a package and copy it in your static files folder. Doing this for maybe 4 files, you won't experience namespace errors. If you copy more files or the whole folder (= no `src` option defined), then you want to create a parent  folder with the actual module name. Enable this with the namespace option, the default is false.
 
 ```js
-   "exact": true
+   "namespaced": true
 ```
+If you do not specify a `src` and no `namespaced` option like in the example below, `namespaced` is set to true, to avoid namespace errors (e.g. two package.json).
 
+```js
+// no `src` and `namespaced` defined
+"jquery": {
+   "version": "3.1.0"
+},
+"normalize.css": {
+   "version": "4.2.0"
+}
+// => confilicts prevented, by parent folders with module name
 
+```
 
 ## Tests
 

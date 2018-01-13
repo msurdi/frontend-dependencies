@@ -31,6 +31,15 @@ function frontendDependencies(workDir) {
         npmInstallPkg(pkg, pkgName);
 
 
+        // process further options
+        var namespaced = pkg.namespaced || false;
+
+        // all files of package are copied (src not defined)
+        // => prevent namespace errors by creating a subfolder
+        if (!pkg.hasOwnProperty('namespaced') && !pkg.hasOwnProperty('src')){
+          namespaced = true
+        }
+
         // prepare folder pathes
         var modulePath = getAndValidateModulePath(workDir, pkgName)
         var sourceFilesPath = path.join(modulePath, pkg.src || "/*");
@@ -39,11 +48,7 @@ function frontendDependencies(workDir) {
         var targetPath = getAndValidateTargetPath(pkg, packageJson, workDir, pkgName);
 
 
-        // process further options
-        var exact = pkg.hasOwnProperty('exact') && pkg.exact == true;
-
-
-        copyFiles(sourceFilesPath, targetPath, pkgName, exact);
+        copyFiles(sourceFilesPath, targetPath, pkgName, namespaced);
 
     }
 }
@@ -130,22 +135,11 @@ function getAndValidateTargetPath(pkg, packageJson, workDir, pkgName){
 }
 
 
-function copyFiles (sourceFilesPath, targetPath, pkgName, exact){
-   if (exact) {
+function copyFiles (sourceFilesPath, targetPath, pkgName, namespaced){
 
-      // I do not understand the purpose, can you explain?
+   // put target into a subfolder with package name?
+   if (namespaced) targetPath = path.join(targetPath, pkgName);
 
-      //  var sourceIsFile = false;
-      //  try {
-      //      sourceIsFile = fs.lstatSync(sourceFilesPath).isFile()
-      //  } catch (e) { /* don't care */ }
-      // if source is a file, create the target parent directory
-      // if (sourceIsFile) targetPath = path.dirname(targetPath)
-      // else: source is a directory, create the full target path
-
-   } else {
-       targetPath = path.join(targetPath, pkgName);
-   }
    shell.mkdir("-p", targetPath);
    shell.cp("-r", sourceFilesPath, targetPath);
 }

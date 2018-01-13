@@ -16,7 +16,8 @@
     "packages": {
       "jquery": {
           "version": "3.1.0",
-          "src": "dist/*"
+          "src": "dist/*",
+          "namespaced":"true"
       },
       "normalize.css": {
           "version": "4.2.0"
@@ -24,8 +25,7 @@
       "turbolinks": {
           "url": "git://github.com/turbolinks/turbolinks.git",
           "src": "{src,LICENSE}",
-          "target": "static/build/turbo",
-          "exact": true
+          "target": "static/build/turbo"
       }
     }
   }

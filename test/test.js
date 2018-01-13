@@ -51,6 +51,11 @@ describe("frontend-dependencies testCase 2", function () {
             assert.ok(!shell.test("-d", "static/build/jquery/src"));
         });
 
+        it("should have copied normalize.css files", function () {
+            assert.ok(shell.test("-f", "static/build/normalize.css/normalize.css"));
+            assert.ok(shell.test("-f", "static/build/normalize.css/package.json"));
+        });
+
         it("should not have copied shelljs", function () {
             assert.ok(!shell.test("-d", "static/build/shelljs"));
         });
@@ -61,7 +66,7 @@ describe("frontend-dependencies testCase 2", function () {
             assert.ok(!shell.test("-f", "static/build/turbo/dist"));
         });
         after(function () {
-            shell.rm("-rf", ["node_modules", "static/build/*"]);
+            //shell.rm("-rf", ["node_modules", "static/build/*"]);
             shell.cd("..");
         });
     });

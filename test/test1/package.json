@@ -16,13 +16,11 @@
     "packages": {
       "jquery": {
           "version": "3.1.0",
-          "src": "dist/jquery.min.js",
-          "exact": true
+          "src": "dist/jquery.min.js"
       },
       "normalize.css": {
           "version": "4.2.0",
-          "src": "normalize.css",
-          "exact": true
+          "src": "normalize.css"
       }
     }
   }
