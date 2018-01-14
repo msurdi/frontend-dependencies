@@ -1,0 +1,32 @@
+{
+  "name": "frontend-dependencies-test",
+  "version": "1.0.0",
+  "description": "frontend-dependencies test project",
+  "main": "index.js",
+  "author": "Matias Surdi <matias@surdi.net>",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "shelljs": "0.7.4",
+    "jquery":"3.1.0",
+    "normalize.css":"4.2.0",
+    "turbolinks":"5.0.0"
+  },
+  "frontendDependencies": {
+    "target": "static/build",
+    "packages": {
+      "jquery": {
+          "version": "3.1.0",
+          "src": "dist/*",
+          "namespaced":"true"
+      },
+      "normalize.css": {
+          "version": "4.2.0"
+      },
+      "turbolinks": {
+          "url": "git://github.com/turbolinks/turbolinks.git",
+          "src": "{src,LICENSE}",
+          "target": "static/build/turbo"
+      }
+    }
+  }
+}
