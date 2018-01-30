@@ -125,7 +125,7 @@ Your target folder in your project will look like:
 Make it a postinstall script by adding this to your package.json:
 ```json
     "scripts": {
-        "postinstall": "frontend-dependencies"
+        "postinstall": "node ./node_modules/frontend-dependencies/index.js"
     }
 ```
 
