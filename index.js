@@ -22,22 +22,21 @@ function frontendDependencies(workDir) {
     var packages = packageJson.frontendDependencies.packages || [];
 
 
-
      // install all packages via npm
-    log('build the "npm install" command')
     var npmPackageList =""
     for (var pkgName in packages) {
         var pkg = packages[pkgName];
         npmPackageList += getNpmPackageString(pkg, pkgName);
     }
     var npmInstallCommand = 'npm i ' + npmPackageList;
-    log(npmInstallCommand)
+    log('build the "npm install" command: ', npmInstallCommand)
 
+    log('installing ...')
     try {
-      shell.exec(npmInstallCommand);
-   } catch (err) {
-      fail(err);
-   }
+        shell.exec(npmInstallCommand);
+    } catch (err) {
+        fail(err);
+    }
 
 
     log("copy all specified files")
