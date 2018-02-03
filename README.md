@@ -129,8 +129,6 @@ Make it a postinstall script by adding this to your package.json:
     }
 ```
 
-You can see a complete example [here](https://github.com/msurdi/frontend-dependencies/blob/master/fixtures/package.json)
-
 Run can also run it by hand
 
 > ./node_modules/.bin/frontend-dependencies
