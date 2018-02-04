@@ -125,11 +125,9 @@ Your target folder in your project will look like:
 Make it a postinstall script by adding this to your package.json:
 ```json
     "scripts": {
-        "postinstall": "frontend-dependencies"
+        "postinstall": "node ./node_modules/frontend-dependencies/index.js"
     }
 ```
-
-You can see a complete example [here](https://github.com/msurdi/frontend-dependencies/blob/master/fixtures/package.json)
 
 Run can also run it by hand
 

@@ -22,14 +22,27 @@ function frontendDependencies(workDir) {
     var packages = packageJson.frontendDependencies.packages || [];
 
 
-    // per package: install and copy specified files
+     // install all packages via npm
+    var npmPackageList =""
+    for (var pkgName in packages) {
+        var pkg = packages[pkgName];
+        npmPackageList += getNpmPackageString(pkg, pkgName);
+    }
+    var npmInstallCommand = 'npm i ' + npmPackageList;
+    log('build the "npm install" command: ', npmInstallCommand)
+
+    log('installing ...')
+    try {
+        shell.exec(npmInstallCommand);
+    } catch (err) {
+        fail(err);
+    }
+
+
+    log("copy all specified files")
     for (var pkgName in packages) {
 
         var pkg = packages[pkgName];
-
-
-        npmInstallPkg(pkg, pkgName);
-
 
         // process further options
         var namespaced = pkg.namespaced || false;
@@ -49,7 +62,6 @@ function frontendDependencies(workDir) {
 
 
         copyFiles(sourceFilesPath, targetPath, pkgName, namespaced);
-
     }
 }
 
@@ -72,7 +84,7 @@ function getAndValidatePackageJson(workDir){
 }
 
 
-function npmInstallPkg(pkg, pkgName){
+function getNpmPackageString(pkg, pkgName){
     // list of npm commands: https://docs.npmjs.com/cli/install
 
     if (pkg.url) {
@@ -88,7 +100,7 @@ function npmInstallPkg(pkg, pkgName){
         npm install bitbucket:<bitbucketname>/<bitbucketrepo>[#<commit-ish>]
         npm install gitlab:<gitlabname>/<gitlabrepo>[#<commit-ish>]
         */
-        tryCommand('npm i ' + pkg.url);
+        return pkg.url + " ";
     } else { // pkg.version might be present or not
         /* install via package name
         npm install [<@scope>/]<name>
@@ -96,20 +108,13 @@ function npmInstallPkg(pkg, pkgName){
         npm install [<@scope>/]<name>@<version>
         npm install [<@scope>/]<name>@<version range>
         */
-        var command = 'npm i ' + pkgName;
-        if (pkg.version) command += ('@' + pkg.version);
-        tryCommand(command);
+        if (pkg.version) pkgName += ('@' + pkg.version);
+        return pkgName + " ";
     }
 }
 
 
-function tryCommand(command) {
-    try {
-        shell.exec(command);
-    } catch (err) {
-        fail(err);
-    }
-}
+
 
 
 function getAndValidateModulePath(workDir, pkgName){
@@ -141,6 +146,7 @@ function copyFiles (sourceFilesPath, targetPath, pkgName, namespaced){
    if (namespaced) targetPath = path.join(targetPath, pkgName);
 
    shell.mkdir("-p", targetPath);
+   log("copy " + sourceFilesPath + " to " + targetPath)
    shell.cp("-r", sourceFilesPath, targetPath);
 }
 
@@ -148,4 +154,10 @@ function copyFiles (sourceFilesPath, targetPath, pkgName, namespaced){
 function fail(reason) {
     console.log(reason);
     process.exit(1);
+}
+
+function log(message) {
+   var blue = '\x1b[34m';
+   var black = '\x1b[0m';
+   console.log(blue, '[frontend-dependencies]: ' + message, black)
 }
