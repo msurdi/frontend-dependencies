@@ -24,7 +24,7 @@ Your package.json:
     "shelljs": "0.7.4"
   },
   "frontendDependencies": {
-    "target": "static/build",
+    "target": "static/",
     "packages": {
       "jquery": {
           "version": "3.1.0",
@@ -45,9 +45,8 @@ Your target folder in your project will look like:
  project
    |
    |_ static
-   |   |_ build
-   |        |_ jquery.min.js
-   |        |_ normalize.css
+   |    |_ jquery.min.js
+   |    |_ normalize.css
    |
 
 ```
@@ -67,7 +66,7 @@ Your target folder in your project will look like:
     "shelljs": "0.7.4"
   },
   "frontendDependencies": {
-    "target": "static/build",
+    "target": "static/",
     "packages": {
       "jquery": {             // npm package name
           "version": "3.1.0", // for `npm install`: version, tag or version range
@@ -81,7 +80,7 @@ Your target folder in your project will look like:
           // alternative to 'version`: specifie git url, tarball url, tarball file, folder
           "url": "git://github.com/turbolinks/turbolinks.git",     
           "src": "{src,LICENSE}", // copy multiple files
-          "target": "static/build/turbo" // specific target path
+          "target": "static/turbo" // specific target path
       }
     }
   }
@@ -94,24 +93,24 @@ Your target folder in your project will look like:
  project
    |
    |_ static
-   |   |_ build
-   |        |_ jquery
-   |        |    |_ core.js
-   |        |    |_ jquery.js
-   |        |    |_ jquery.min.js
-   |        |    |_ ...
+   |   |
+   |   |_ jquery
+   |   |    |_ core.js
+   |   |    |_ jquery.js
+   |   |    |_ jquery.min.js
+   |   |    |_ ...
+   |   |
+   |   |_ normalize.css
+   |   |    |_ CHANGELOG.md
+   |   |    |_ LICENSE.md
+   |   |    |_ normalize.css
+   |   |    |_ ...
+   |   |
+   |   |_ turbo
+   |        |_ src
+   |        |   |_ turbolinks
    |        |
-   |        |_ normalize.css
-   |        |    |_ CHANGELOG.md
-   |        |    |_ LICENSE.md
-   |        |    |_ normalize.css
-   |        |    |_ ...
-   |        |
-   |        |_ turbo
-   |              |_ src
-   |              |   |_ turbolinks
-   |              |
-   |              |_ LICENSE
+   |        |_ LICENSE
    |
    |
 
@@ -163,23 +162,23 @@ The source file(s) or folder(s) within each npm package to be copied.
    "src": "dist/*"
 
    // option 3: copy serveral files or folders
-   "src": "{index.js,index.css}"]
+   "src": "{index.js,index.css}"
 ```
 
 #### target
-The source file(s) or folder(s) within each npm package to be copied.
+A specific target folder to copy the files of one frontend package to. If not specified extra, the target will be  "frontendDependencies.target".
 
 ```js
    "target": "dest"
 ```
 
 #### namespaced
-Often you will copy just a single file from a package and copy it in your static files folder. Doing this for maybe 4 files, you won't experience namespace errors. If you copy more files or the whole folder (= no `src` option defined), then you want to create a parent  folder with the actual module name. Enable this with the namespace option, the default is false.
+Often you will copy just a single file from a package and copy it in your static files folder. Doing this for 4 files, you won't experience namespace errors. If you copy more files or the whole folder (= no `src` option defined), then you want to create a parent  folder with the actual module name. Enable this with the namespace option, the default is false.
 
 ```js
    "namespaced": true
 ```
-If you do not specify a `src` and no `namespaced` option like in the example below, `namespaced` is set to true, to avoid namespace errors (e.g. two package.json).
+If you do not specify a `src` and no `namespaced` option like in the example below, `namespaced` is set to true, to avoid namespace errors (e.g. file conflicts from two package.json).
 
 ```js
 // no `src` and `namespaced` defined
@@ -213,7 +212,7 @@ If you do not specify a `src` and no `namespaced` option like in the example bel
    * when you try not keep the ammount of dependencies at a reasonable level, this might be overkill
 
 ## Ideas
-The goal of this package is to make the management of frontend components easier and lower maintenance.
+The goal of this package is to make the management of frontend components easier and lower maintenance. Aspects we consider important for "how to do it right":
 
 * Most packages come with a ready to use (compiled and minified, etc.) version of js and css
 * With http2, the sending of small files is encouraged
