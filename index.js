@@ -28,7 +28,7 @@ function frontendDependencies(workDir) {
         var pkg = packages[pkgName];
         npmPackageList += getNpmPackageString(pkg, pkgName);
     }
-    var npmInstallCommand = 'npm i ' + npmPackageList;
+    var npmInstallCommand = 'npm i --no-save' + npmPackageList;
     log('build the "npm install" command: ', npmInstallCommand)
 
     log('installing ...')
