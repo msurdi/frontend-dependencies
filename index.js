@@ -28,8 +28,10 @@ function frontendDependencies(workDir) {
         var pkg = packages[pkgName];
         npmPackageList += getNpmPackageString(pkg, pkgName);
     }
-    var npmInstallCommand = 'npm i ' + npmPackageList;
-    log('build the "npm install" command: ', npmInstallCommand)
+    // npm 5 will save dependecies automatic to the package.json on "npm i"
+    // to only have the dependecies under frontendDependencies, we use "npm i --no-save"
+    var npmInstallCommand = 'npm i --no-save ' + npmPackageList;
+    log('build the "npm install" command: ' + npmInstallCommand)
 
     log('installing ...')
     try {
