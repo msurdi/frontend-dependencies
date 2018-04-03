@@ -4,6 +4,7 @@
 var shell = require("shelljs");
 var path = require("path");
 var fs = require("fs");
+var modulePathPrefix = 'node_modules/frontend-dependencies';
 
 
 shell.config.fatal = true;
@@ -28,8 +29,10 @@ function frontendDependencies(workDir) {
         var pkg = packages[pkgName];
         npmPackageList += getNpmPackageString(pkg, pkgName);
     }
-    var npmInstallCommand = 'npm i ' + npmPackageList;
-    log('build the "npm install" command: ', npmInstallCommand)
+    // npm 5 will save dependecies automatic to the package.json on "npm i"
+    // to only have the dependecies under frontendDependencies, we use "npm i --no-save"
+    var npmInstallCommand = 'npm i --no-save --prefix '+ modulePathPrefix +' ' + npmPackageList;
+    log('build the "npm install" command: ' + npmInstallCommand)
 
     log('installing ...')
     try {
@@ -118,7 +121,7 @@ function getNpmPackageString(pkg, pkgName){
 
 
 function getAndValidateModulePath(workDir, pkgName){
-   var mdPath = path.join(workDir, "node_modules", pkgName);
+   var mdPath = path.join(workDir, modulePathPrefix, "node_modules/", pkgName);
    if (!shell.test("-d", mdPath)) fail("Module not found or not a directory: " + mdPath);
    return mdPath
    //  eg.: /opt/myProject/node_modules/jquery
