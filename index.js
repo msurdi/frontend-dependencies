@@ -31,7 +31,7 @@ function frontendDependencies(workDir) {
     }
     // npm 5 will save dependecies automatic to the package.json on "npm i"
     // to only have the dependecies under frontendDependencies, we use "npm i --no-save"
-    var npmInstallCommand = 'npm i --no-save --prefix '+ modulePathPrefix +' ' + npmPackageList;
+    var npmInstallCommand = 'npm i --no-save --prefix '+ modulePathPrefix + ' ' + npmPackageList;
     log('build the "npm install" command: ' + npmInstallCommand)
 
     log('installing ...')
