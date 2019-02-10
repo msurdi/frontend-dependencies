@@ -36,7 +36,7 @@ function frontendDependencies(workDir) {
     //   actually we also do not need any regual dependencies, but there is currently no option to disable that
     // * --prefix folderPath: store dependencies in a separate folder, so there will be no interference between the
     //   main "npm install" and the one from the frontendDependencies
-    var npmInstallCommand = 'npm i --no-save --production  --prefix '+ modulePathPrefix + ' ' + npmPackageList;
+    var npmInstallCommand = 'npm i --no-save --no-optional --production  --prefix '+ modulePathPrefix + ' ' + npmPackageList;
     log('build the "npm install" command: ' + npmInstallCommand)
 
     log('installing ...')
