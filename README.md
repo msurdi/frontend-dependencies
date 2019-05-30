@@ -127,10 +127,15 @@ Make it a postinstall script by adding this to your package.json:
         "postinstall": "node ./node_modules/frontend-dependencies/index.js"
     }
 ```
+If postinstall did not run you can use `npm run postinstall` command after installed.
 
 Run can also run it by hand
 
 > ./node_modules/.bin/frontend-dependencies
+
+For Windows user, please run it in PowerShell or use this command in Command Prompt.
+
+> node_modules\\.bin\frontend-dependencies.cmd
 
 ### Packages Options
 
