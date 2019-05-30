@@ -116,7 +116,7 @@ function getNpmPackageString(pkg, pkgName){
         npm install [<@scope>/]<name>@<version>
         npm install [<@scope>/]<name>@<version range>
         */
-        if (pkg.version) pkgName += ('@' + pkg.version);
+        if (pkg.version) pkgName += ('@"' + pkg.version + '"');
         return pkgName + " ";
     }
 }
