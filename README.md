@@ -128,9 +128,14 @@ Make it a postinstall script by adding this to your package.json:
     }
 ```
 
-Run can also run it by hand
+If postinstall did not run you can use this after installed:
+> npm run postinstall
 
+Run can also run it with
 > ./node_modules/.bin/frontend-dependencies
+
+Windows user run it in PowerShell or use this command in Command Prompt:
+> node_modules\\.bin\frontend-dependencies.cmd
 
 ### Packages Options
 
