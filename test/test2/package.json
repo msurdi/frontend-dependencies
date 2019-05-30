@@ -23,7 +23,7 @@
           "version": "4.2.0"
       },
       "turbolinks": {
-          "url": "git://github.com/turbolinks/turbolinks.git",
+          "url": "git://github.com/turbolinks/turbolinks.git#a720d93",
           "src": "{src,LICENSE}",
           "target": "static/build/turbo"
       }
