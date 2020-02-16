@@ -5,7 +5,7 @@
 
 Easily manage your frontend dependencies in `package.json`:
 Install node modules and copy desired files to each directory.
-
+You can use all frontendDependencies also in the backend (isomorph JavaScript).
 
 NOTE: There is a breaking change from Version `0.4.0` to `1.0.0`. Be sure to update your projects to the new syntax!
 
@@ -77,10 +77,6 @@ Your target folder in your project will look like:
           "version": "3.1.0",   // for `npm install`: version, tag or version range
           "src": "dist/*"       // relative path in package to copy files
           "namespaced": true    // extra parent folder with package Name
-      },
-
-      "moment": {               // use in backend and frontend
-          "isomorph": true,
       },
 
       "turbolinks": {
@@ -184,33 +180,6 @@ The source file(s) or folder(s) within each npm package to be copied.
 ```js
    "target": "dest"
 ```
-
-#### isomorph: use a package in backend and frontend
-This skips the usual additional npm install of frontendDependencies and assumes the regular npm install placed it already in node_modules; it only copys the files from there.
-
-
-```js
-   "isomorph": true
-```
-
-Your package.json has then also to include the package in dependencies:
-
-```js
-
-"dependencies": {
-  "moment": "2.24.0"       // regular install
-},
-"frontendDependencies": {
-  "target": "static/",
-  "packages": {
-
-    "moment": {            // copy it for frontend
-        "isomorph": true,
-    },
-
-```
-
-
 
 
 #### namespaced copy

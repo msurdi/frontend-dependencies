@@ -27,9 +27,7 @@ function frontendDependencies(workDir) {
     var npmPackageList =""
     for (var pkgName in packages) {
         var pkg = packages[pkgName];
-        if (!pkg.isomorph){
-            npmPackageList += getNpmPackageString(pkg, pkgName);
-        }
+        npmPackageList += getNpmPackageString(pkg, pkgName);
     }
 
     // npm install options:
@@ -49,7 +47,18 @@ function frontendDependencies(workDir) {
     }
 
 
-    log("copy all specified files")
+
+    // copy new installed modules from tmp folder back to node_modules
+    // this allows us to use them also in the backend
+    var frontendSrcPath = path.join(workDir, modulePathPrefix, "node_modules/*");
+    var nodeModulePath = path.join(workDir, "node_modules/");
+    log("copy " + frontendSrcPath + " to " + nodeModulePath);
+    shell.cp("-r", frontendSrcPath, nodeModulePath);
+
+
+
+
+    log("copy all specified files");
     for (var pkgName in packages) {
 
         var pkg = packages[pkgName];
@@ -64,7 +73,7 @@ function frontendDependencies(workDir) {
         }
 
         // prepare folder pathes
-        var modulePath = getAndValidateModulePath(workDir, pkgName, pkg.isomorph)
+        var modulePath = getAndValidateModulePath(workDir, pkgName)
         var sourceFilesPath = path.join(modulePath, pkg.src || "/*");
         //  eg.: /opt/myProject/node_modules/jquery/dist/*
         //  eg.: /opt/myProject/node_modules/jquery/dist/{file1,file2}
@@ -73,6 +82,8 @@ function frontendDependencies(workDir) {
 
         copyFiles(sourceFilesPath, targetPath, pkgName, namespaced);
     }
+
+
 }
 
 
@@ -126,12 +137,8 @@ function getNpmPackageString(pkg, pkgName){
 
 
 
-
-
-function getAndValidateModulePath(workDir, pkgName, noPrefix){
-   var args = [workDir, "node_modules/", pkgName]; // /myProject/node_modules/jquery/
-   if (!noPrefix) args = [workDir, modulePathPrefix, "node_modules/", pkgName]; // /myProject/node_modules/frontendDependencies/node_modules/jquery/
-   var mdPath = path.join.apply(null, args);
+function getAndValidateModulePath(workDir, pkgName){
+   var mdPath = path.join(workDir, "node_modules/", pkgName);
    if (!shell.test("-d", mdPath)) fail("Module not found or not a directory: " + mdPath);
    return mdPath
    //  eg.: /opt/myProject/node_modules/jquery
@@ -159,10 +166,9 @@ function copyFiles (sourceFilesPath, targetPath, pkgName, namespaced){
    if (namespaced) targetPath = path.join(targetPath, pkgName);
 
    shell.mkdir("-p", targetPath);
-   log("copy " + pkgName + " to " + targetPath)
+   log("copy " + pkgName + " to " + targetPath);
    shell.cp("-r", sourceFilesPath, targetPath);
 }
-
 
 function fail(reason) {
     console.log(reason);
