@@ -20,7 +20,7 @@ function frontendDependencies(workDir) {
     // prepare everything
     workDir = workDir || process.cwd();
     var packageJson = getAndValidatePackageJson(workDir);
-    var packages = packageJson.frontendDependencies.packages || [];
+    var packages = packageJson.frontendDependencies.packages || {};
 
 
      // install all packages via npm
@@ -47,7 +47,18 @@ function frontendDependencies(workDir) {
     }
 
 
-    log("copy all specified files")
+
+    // copy new installed modules from tmp folder back to node_modules
+    // this allows us to use them also in the backend
+    var frontendSrcPath = path.join(workDir, modulePathPrefix, "node_modules/*");
+    var nodeModulePath = path.join(workDir, "node_modules/");
+    log("copy " + frontendSrcPath + " to " + nodeModulePath);
+    shell.cp("-r", frontendSrcPath, nodeModulePath);
+
+
+
+
+    log("copy all specified files");
     for (var pkgName in packages) {
 
         var pkg = packages[pkgName];
@@ -71,6 +82,8 @@ function frontendDependencies(workDir) {
 
         copyFiles(sourceFilesPath, targetPath, pkgName, namespaced);
     }
+
+
 }
 
 
@@ -117,16 +130,15 @@ function getNpmPackageString(pkg, pkgName){
         npm install [<@scope>/]<name>@<version range>
         */
         if (pkg.version) pkgName += ('@"' + pkg.version + '"');
+        if (typeof pkg === 'string') pkgName += ('@"' + pkg + '"');
         return pkgName + " ";
     }
 }
 
 
 
-
-
 function getAndValidateModulePath(workDir, pkgName){
-   var mdPath = path.join(workDir, modulePathPrefix, "node_modules/", pkgName);
+   var mdPath = path.join(workDir, "node_modules/", pkgName);
    if (!shell.test("-d", mdPath)) fail("Module not found or not a directory: " + mdPath);
    return mdPath
    //  eg.: /opt/myProject/node_modules/jquery
@@ -154,10 +166,9 @@ function copyFiles (sourceFilesPath, targetPath, pkgName, namespaced){
    if (namespaced) targetPath = path.join(targetPath, pkgName);
 
    shell.mkdir("-p", targetPath);
-   log("copy " + sourceFilesPath + " to " + targetPath)
+   log("copy " + pkgName + " to " + targetPath);
    shell.cp("-r", sourceFilesPath, targetPath);
 }
-
 
 function fail(reason) {
     console.log(reason);
@@ -167,5 +178,5 @@ function fail(reason) {
 function log(message) {
    var blue = '\x1b[34m';
    var black = '\x1b[0m';
-   console.log(blue, '[frontend-dependencies]: ' + message, black)
+   console.log(blue, '[frontend-deps]: ' + message, black)
 }
