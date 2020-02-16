@@ -20,14 +20,16 @@ function frontendDependencies(workDir) {
     // prepare everything
     workDir = workDir || process.cwd();
     var packageJson = getAndValidatePackageJson(workDir);
-    var packages = packageJson.frontendDependencies.packages || [];
+    var packages = packageJson.frontendDependencies.packages || {};
 
 
      // install all packages via npm
     var npmPackageList =""
     for (var pkgName in packages) {
         var pkg = packages[pkgName];
-        npmPackageList += getNpmPackageString(pkg, pkgName);
+        if (!pkg.isomorph){
+            npmPackageList += getNpmPackageString(pkg, pkgName);
+        }
     }
 
     // npm install options:
@@ -41,6 +43,7 @@ function frontendDependencies(workDir) {
 
     log('installing ...')
     try {
+        shell.exec('pwd');
         shell.exec(npmInstallCommand);
     } catch (err) {
         fail(err);
@@ -62,7 +65,7 @@ function frontendDependencies(workDir) {
         }
 
         // prepare folder pathes
-        var modulePath = getAndValidateModulePath(workDir, pkgName)
+        var modulePath = getAndValidateModulePath(workDir, pkgName, pkg.isomorph)
         var sourceFilesPath = path.join(modulePath, pkg.src || "/*");
         //  eg.: /opt/myProject/node_modules/jquery/dist/*
         //  eg.: /opt/myProject/node_modules/jquery/dist/{file1,file2}
@@ -117,6 +120,7 @@ function getNpmPackageString(pkg, pkgName){
         npm install [<@scope>/]<name>@<version range>
         */
         if (pkg.version) pkgName += ('@"' + pkg.version + '"');
+        if (typeof pkg === 'string') pkgName += ('@"' + pkg + '"');
         return pkgName + " ";
     }
 }
@@ -125,8 +129,10 @@ function getNpmPackageString(pkg, pkgName){
 
 
 
-function getAndValidateModulePath(workDir, pkgName){
-   var mdPath = path.join(workDir, modulePathPrefix, "node_modules/", pkgName);
+function getAndValidateModulePath(workDir, pkgName, noPrefix){
+   var args = [workDir, "node_modules/", pkgName]; // /myProject/node_modules/jquery/
+   if (!noPrefix) args.splice(2, 0, modulePathPrefix); // /myProject/node_modules/frontendDependencies/node_modules/jquery/
+   var mdPath = path.join.apply(null, args);
    if (!shell.test("-d", mdPath)) fail("Module not found or not a directory: " + mdPath);
    return mdPath
    //  eg.: /opt/myProject/node_modules/jquery
