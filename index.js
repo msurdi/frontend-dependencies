@@ -159,7 +159,7 @@ function copyFiles (sourceFilesPath, targetPath, pkgName, namespaced){
    if (namespaced) targetPath = path.join(targetPath, pkgName);
 
    shell.mkdir("-p", targetPath);
-   log("copy " + sourceFilesPath + " to " + targetPath)
+   log("copy " + pkgName + " to " + targetPath)
    shell.cp("-r", sourceFilesPath, targetPath);
 }
 
@@ -172,5 +172,5 @@ function fail(reason) {
 function log(message) {
    var blue = '\x1b[34m';
    var black = '\x1b[0m';
-   console.log(blue, '[frontend-dependencies]: ' + message, black)
+   console.log(blue, '[frontend-deps]: ' + message, black)
 }
