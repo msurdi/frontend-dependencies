@@ -43,7 +43,6 @@ function frontendDependencies(workDir) {
 
     log('installing ...')
     try {
-        shell.exec('pwd');
         shell.exec(npmInstallCommand);
     } catch (err) {
         fail(err);
@@ -131,7 +130,7 @@ function getNpmPackageString(pkg, pkgName){
 
 function getAndValidateModulePath(workDir, pkgName, noPrefix){
    var args = [workDir, "node_modules/", pkgName]; // /myProject/node_modules/jquery/
-   if (!noPrefix) args.splice(2, 0, modulePathPrefix); // /myProject/node_modules/frontendDependencies/node_modules/jquery/
+   if (!noPrefix) args = [workDir, modulePathPrefix, "node_modules/", pkgName]; // /myProject/node_modules/frontendDependencies/node_modules/jquery/
    var mdPath = path.join.apply(null, args);
    if (!shell.test("-d", mdPath)) fail("Module not found or not a directory: " + mdPath);
    return mdPath
