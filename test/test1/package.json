@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "shelljs": "0.7.4",
-    "jquery":"3.1.0",
+    "jquery":"3.4.1",
     "normalize.css":"4.2.0",
     "turbolinks":"5.0.0"
   },
