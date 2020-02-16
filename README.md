@@ -61,21 +61,28 @@ Your target folder in your project will look like:
   "main": "index.js",
   "author": "Matias Surdi <matias@surdi.net>",
   "license": "Apache-2.0",
-  "dependencies": { },
+  "dependencies": {
+    "moment": "2.24.0"
+  },
   "devDependencies": {
     "shelljs": "0.7.4"
   },
   "frontendDependencies": {
     "target": "static/",
     "packages": {
-      "jquery": {             // npm package name
-          "version": "3.1.0", // for `npm install`: version, tag or version range
-          "src": "dist/*"     // relative path in package to copy files
-          "namespaced": true  // extra parent folder with package Name
+
+      "normalize.css": "4.2.0", // copy whole package
+
+      "jquery": {               // with options
+          "version": "3.1.0",   // for `npm install`: version, tag or version range
+          "src": "dist/*"       // relative path in package to copy files
+          "namespaced": true    // extra parent folder with package Name
       },
-      "normalize.css": { // copy whole package
-          "version": "4.2.0"
+
+      "moment": {               // use in backend and frontend
+          "isomorph": true,
       },
+
       "turbolinks": {
           // alternative to 'version`: specifie git url, tarball url, tarball file, folder
           "url": "git://github.com/turbolinks/turbolinks.git",     
@@ -140,7 +147,7 @@ Windows user run it in PowerShell or use this command in Command Prompt:
 ### Packages Options
 
 #### version
-The npm package name will be taken from the name specified in "frontendDependencies.packages" and the package installed from npm.
+The npm package name is taken from the specified name in "frontendDependencies.packages".
 ```js
                          // none: install latest
     "version": "0.2.4"   // version
@@ -171,13 +178,42 @@ The source file(s) or folder(s) within each npm package to be copied.
 ```
 
 #### target
-A specific target folder to copy the files of one frontend package to. If not specified extra, the target will be  "frontendDependencies.target".
+* specific target folder to copy the files of a frontend package to
+* if not specified, target is the global "frontendDependencies.target"
 
 ```js
    "target": "dest"
 ```
 
-#### namespaced
+#### isomorph: use a package in backend and frontend
+This skips the usual additional npm install of frontendDependencies and assumes the regular npm install placed it already in node_modules; it only copys the files from there.
+
+
+```js
+   "isomorph": true
+```
+
+Your package.json has then also to include the package in dependencies:
+
+```js
+
+"dependencies": {
+  "moment": "2.24.0"       // regular install
+},
+"frontendDependencies": {
+  "target": "static/",
+  "packages": {
+
+    "moment": {            // copy it for frontend
+        "isomorph": true,
+    },
+
+```
+
+
+
+
+#### namespaced copy
 Often you will copy just a single file from a package and copy it in your static files folder. Doing this for 4 files, you won't experience namespace errors. If you copy more files or the whole folder (= no `src` option defined), then you want to create a parent  folder with the actual module name. Enable this with the namespace option, the default is false.
 
 ```js
@@ -204,7 +240,8 @@ If you do not specify a `src` and no `namespaced` option like in the example bel
 
 ## ToDo
 
-* improve testing for npm install for packages and urls
+* build a CI
+* improve testing
 
 ## Experience with managing npm dependencies for the frontend
 
