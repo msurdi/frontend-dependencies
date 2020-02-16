@@ -61,9 +61,6 @@ Your target folder in your project will look like:
   "main": "index.js",
   "author": "Matias Surdi <matias@surdi.net>",
   "license": "Apache-2.0",
-  "dependencies": {
-    "moment": "2.24.0"
-  },
   "devDependencies": {
     "shelljs": "0.7.4"
   },
