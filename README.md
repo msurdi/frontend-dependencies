@@ -135,7 +135,7 @@ Run can also run it with
 > ./node_modules/.bin/frontend-dependencies
 
 Windows user run it in PowerShell or use this command in Command Prompt:
-> node_modules\\.bin\frontend-dependencies.cmd
+> node_modules\\.bin\\frontend-dependencies.cmd
 
 ### Packages Options
 
@@ -180,12 +180,12 @@ The source file(s) or folder(s) within each npm package to be copied.
 
 
 #### namespaced copy
-Often you will copy just a single file from a package and copy it in your static files folder. Doing this for 4 files, you won't experience namespace errors. If you copy more files or the whole folder (= no `src` option defined), then you want to create a parent  folder with the actual module name. Enable this with the namespace option, the default is false.
+Often you will copy just a single file from a package and copy it in your static files folder. Doing this for 4 files, you won't experience namespace errors. If you copy more files or the whole folder (= no `src` option defined), then you want to create a parent folder with the actual module name. Enable this with the `namespaced` option; the default is false.
 
 ```js
    "namespaced": true
 ```
-If you do not specify a `src` and no `namespaced` option like in the example below, `namespaced` is set to true, to avoid namespace errors (e.g. file conflicts from two package.json).
+If neither `src` nor `namespaced` options are specified as in the example below, `namespaced` defaults to true, to avoid namespace errors (e.g. file conflicts from two package.json).
 
 ```js
 // no `src` and `namespaced` defined
@@ -195,7 +195,7 @@ If you do not specify a `src` and no `namespaced` option like in the example bel
 "normalize.css": {
    "version": "4.2.0"
 }
-// => confilicts prevented, by parent folders with module name
+// => conflicts prevented, by parent folders with module name
 
 ```
 
