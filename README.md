@@ -135,7 +135,7 @@ Run can also run it with
 > ./node_modules/.bin/frontend-dependencies
 
 Windows user run it in PowerShell or use this command in Command Prompt:
-> node_modules\\.bin\frontend-dependencies.cmd
+> node_modules\\.bin\\frontend-dependencies.cmd
 
 ### Packages Options
 
@@ -195,7 +195,7 @@ If you do not specify a `src` and no `namespaced` option like in the example bel
 "normalize.css": {
    "version": "4.2.0"
 }
-// => confilicts prevented, by parent folders with module name
+// => conflicts prevented, by parent folders with module name
 
 ```
 
