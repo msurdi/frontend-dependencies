@@ -4,7 +4,7 @@
 var shell = require("shelljs");
 var path = require("path");
 var fs = require("fs");
-var modulePathPrefix = 'node_modules/frontend-dependencies';
+var modulePathPrefix = 'node_modules/frontend-dependencies/tmp';
 
 
 shell.config.fatal = true;
@@ -24,7 +24,7 @@ function frontendDependencies(workDir) {
 
 
      // install all packages via npm
-    var npmPackageList =""
+    var npmPackageList = "";
     for (var pkgName in packages) {
         var pkg = packages[pkgName];
         npmPackageList += getNpmPackageString(pkg, pkgName);
@@ -32,15 +32,18 @@ function frontendDependencies(workDir) {
 
     // npm install options:
     // * --no-save: ignore automatic dependencies adding (since npm 5) to the package.json on "npm i"
-    // * --production: do not install dev dependencies as we need only some files from the npm module folders itselfe
-    //   actually we also do not need any regual dependencies, but there is currently no option to disable that
+    // * --production: do not install dev dependencies as we need only some files from the npm module folders itself.
+    //   actually we also do not need any regular dependencies, but there is currently no option to disable that
+    // * --no-fund: hide funding message
     // * --prefix folderPath: store dependencies in a separate folder, so there will be no interference between the
     //   main "npm install" and the one from the frontendDependencies
-    var npmInstallCommand = 'npm i --no-save --no-optional --production  --prefix '+ modulePathPrefix + ' ' + npmPackageList;
+    var npmInstallCommand = 'npm i --no-save --no-optional --production --no-fund --prefix ' + modulePathPrefix + ' ' + npmPackageList;
     log('build the "npm install" command: ' + npmInstallCommand)
 
     log('installing ...')
     try {
+        shell.mkdir('-p', modulePathPrefix);
+        fs.writeFileSync(modulePathPrefix + '/package.json', '{"description": "_", "repository": "_", "license": "UNLICENSED"}');
         shell.exec(npmInstallCommand);
     } catch (err) {
         fail(err);
