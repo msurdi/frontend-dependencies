@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/msurdi/frontend-dependencies.svg?branch=master)](https://travis-ci.org/msurdi/frontend-dependencies)
+![Node.js CI](https://github.com/msurdi/frontend-dependencies/workflows/Node.js%20CI/badge.svg)
 
 
 # frontend-dependencies
