@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/msurdi/frontend-dependencies#readme",
   "devDependencies": {
-    "mocha": "^8.2.1"
+    "mocha": "^11.0.1"
   },
   "dependencies": {
     "shelljs": "^0.8.4"
